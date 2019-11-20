@@ -1,0 +1,214 @@
+using System;
+
+namespace BattleShipBoardGame
+{
+    class Program
+    {
+        static void Main()
+        {
+            Random rnd = new Random();
+            bool towplay = false;
+            bool positive = false;
+            bool bo = false;
+            int[,] arr = new int[3, 3];
+
+            Console.WriteLine("hello and welcome to BattleShip game!!!");
+            while (positive == false)
+            {
+              
+                //Console.WriteLine("if you want to play a BattleShip gane ENTER 'yes'");
+                //string yesss = Console.ReadLine();
+
+                Console.WriteLine("if you want to play VS the computer enter '1' if you are tow players enter '2'");
+                int numberofplayers = int.Parse(Console.ReadLine());
+                Console.WriteLine(" ");
+
+                if (numberofplayers == 1)
+                {
+
+                    for (int i = 0; i < 3; i++)
+                    {
+
+                        for (int j = 0; j < 3; j++)
+                        {
+                            arr[i, j] = rnd.Next(0, 2);
+
+                        }
+
+                    }
+                    while (bo == false)
+                    {
+                        int answer = 0;
+                        Console.WriteLine("please enter x place(0-2)");
+                        int x = int.Parse(Console.ReadLine());
+
+                        Console.WriteLine(" ");
+
+                        Console.WriteLine("please enter y place(0-2)");
+                        int y = int.Parse(Console.ReadLine());
+
+                        if (arr[x, y] == 0)
+                        {
+                            Console.Clear();
+                            //Console.WriteLine(" ");
+                            Console.WriteLine("miss");
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            //Console.WriteLine(" ");
+                            Console.WriteLine("boom!");
+                            arr[x, y] = 0;
+                        }
+
+                        for (int i = 0; i < 3; i++)
+                        {
+
+                            for (int j = 0; j < 3; j++)
+                            {
+                                answer += arr[i, j];
+
+                            }
+
+                        }
+                        if (answer == 0)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("you win!!! Mazal Tov");
+                            bo = true;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            //Console.WriteLine(" ");
+                            Console.WriteLine("keep trying you in the right way!");
+                        } 
+                    }
+                }
+                else
+                {
+                    int[,] boardA = new int[10, 10];
+                    int[,] boardB = new int[10, 10];
+
+                    Console.WriteLine("please enter first player name");
+                    string nameA = Console.ReadLine();
+                    Console.WriteLine("please enter second player name");
+                    string nameB = Console.ReadLine();
+
+                    Console.WriteLine("{0} please Enter x,y of your boats",nameA);
+                    Console.WriteLine("you have only five boats to put on 10 x 10 board ^^");
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Console.WriteLine("enter X of your boat (0-9)");
+                            int x = int.Parse(Console.ReadLine());
+
+                            for (int j = 0; j < 1; j++)
+                            {
+                                Console.WriteLine("enter Y of your boat (0-9)");
+                                int y = int.Parse(Console.ReadLine());
+                                boardA[x, y] = 1;
+                            }
+                        }
+
+                    
+                    Console.WriteLine("{0} please Enter x,y of your boats",nameB);
+                    Console.WriteLine("you have only five boats to put on 10 x 10 board ^^");
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Console.WriteLine("enter X of your boat (0-9)");
+                            int x = int.Parse(Console.ReadLine());
+
+                            for (int j = 0; j < 1; j++)
+                            {
+                                Console.WriteLine("enter Y of your boat (0-9)");
+                                int y = int.Parse(Console.ReadLine());
+                                boardB[x, y] = 1;
+                            }
+                        }
+
+                    while (towplay == false)
+                    {
+                        int checkA = 0;
+                        int checkB = 0;
+                        Console.WriteLine("{0} please enter your X bomb",nameA);
+                        int xf = int.Parse(Console.ReadLine());//xf = x of boardB (boardB second player)
+
+                        Console.WriteLine("{0} please enter your Y bomb",nameA);
+                        int yf = int.Parse(Console.ReadLine());//yf = y of boardB (boardB second player)
+
+                        Console.WriteLine("{0} please enter your X bomb",nameB);
+                        int xs = int.Parse(Console.ReadLine());//xs = x of boardA (board A first player)
+
+                        Console.WriteLine("{0} please enter your Y bomb",nameB);
+                        int ys = int.Parse(Console.ReadLine());//ys = y of boardA (board A first player)
+                        Console.Clear();
+
+                        if (boardB[xf, yf] == 0) //first player
+                        {
+                            Console.WriteLine("{0} you miss",nameA);
+                        }
+                        else if (boardB[xf, yf] == 1) //first player
+                        {
+                            Console.WriteLine("Boom! nice hit {0}",nameA);
+                            boardB[xf, yf] = 0;
+                        }
+
+                        if (boardA[xs, ys] == 0) //second player
+                        {
+                            Console.WriteLine("{0} you miss",nameB);
+                        }
+                        else if (boardA[xs, ys] == 1) //second player
+                        {
+                            Console.WriteLine("Boom! nice hit {0}",nameB);
+                            boardA[xs, ys] = 0;
+                        }
+
+                        for (int i = 0; i < 10; i++)
+                        {
+                            for (int j = 0; j < 10; j++)
+                            {
+                                checkA += boardB[i, j];
+                                checkB += boardA[i, j];
+
+                            }
+                        }
+
+                        if (checkA == 0 && checkB == 0)
+                        {
+                            Console.WriteLine("Draw");
+                            towplay = true;
+
+                        }
+                        else if (checkA == 0)
+                        {
+                            Console.WriteLine("{0} win Mazal Tov!!!",nameA);
+                            towplay = true;
+                        }
+                        else if (checkB == 0)
+                        {
+                            Console.WriteLine("{0} win Mazal Tov!!!",nameB);
+                            towplay = true;
+                        }
+
+                    }
+                }
+                Console.WriteLine("do you want to play again?");
+                Console.WriteLine("Enter yes/no");
+                string answerr = Console.ReadLine();
+                if (answerr.ToLower() == "no")
+                {
+                    positive = true;
+                    Console.WriteLine("Thank you for playing <3");
+                    Console.WriteLine("cya next time ^^");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    continue;
+                   
+                }
+            }
+           
+        }
+    }
+}
